@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import MovieFetch from "./MovieFetch";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>this is where I will be testing code.</h1>
+      <h1>Populars</h1>
+      <MovieFetch/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
