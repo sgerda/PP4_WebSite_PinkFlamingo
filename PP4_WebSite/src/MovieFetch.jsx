@@ -4,6 +4,9 @@ import axios from 'axios';
 // API Authentication Token
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
 
+// this is what I need to pass as a prop for the other component so it shows one movie per page.
+var MovieId = -1; 
+
 // MovieFetch component fetches data from the API
 const MovieFetch = ({/* prop -->*/ }) => {
     const [Movies, setMovies] = useState([]);
@@ -40,6 +43,17 @@ const MovieFetch = ({/* prop -->*/ }) => {
 
     }, []);
 
+    //event handler for clicking on movie poster and getting the movie id
+    const handleClick = (id) =>{
+        if(MovieId == -1){
+            MovieId = id;
+            console.log("This is the movie id of the poster I click: ", MovieId);
+        }
+        else{
+            MovieId = -1;
+        }
+        
+    }
 
     // Return the fetched data
     return (
@@ -53,6 +67,7 @@ const MovieFetch = ({/* prop -->*/ }) => {
                             <img
                                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                                 alt={movie.title} 
+                                onClick={()=>handleClick(movie.id)}
                             />
                         )}
                         <p>
