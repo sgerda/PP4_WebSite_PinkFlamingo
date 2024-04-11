@@ -47,7 +47,8 @@ const MovieFetch = ({/* prop -->*/ }) => {
             <div>
                 {Movies.map((movie) => (
                     <div key={movie.id}>
-                        <h3>{movie.title}</h3> {/* Fixed typo here */}
+                        <h3>{movie.title}</h3>  {/* create a component and pass the movie id
+                        this component will display that on movie being clicked */}
                         {movie.poster_path && (
                             <img
                                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
