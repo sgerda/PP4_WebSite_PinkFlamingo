@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import Provider from "./Provider";
 
 
 const MovieDetail = ({ prop }) => {
-    console.log("Received Id:", prop.id);
+    const Token = prop.Token;
+    const Id = prop.Id;
+   
     const [movieDetail, setMovieDetail] = useState({}); // Initialize as empty object
 
     useEffect(() => {
         const fetchMovieDetail = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.themoviedb.org/3/movie/${prop.Id}`,
+                    `https://api.themoviedb.org/3/movie/${Id}`,
                     {
                         params: {
                             language: 'en-US',
                         },
                         headers: {
                             Accept: "application/json",
-                            Authorization: prop.Token,
+                            Authorization: Token,
                         }
                     }
                 );
@@ -32,6 +35,8 @@ const MovieDetail = ({ prop }) => {
 
         fetchMovieDetail();
     }, [prop]);
+
+    console.log("Received Id for details:", Id);
 
     return (
         <>
@@ -59,6 +64,9 @@ const MovieDetail = ({ prop }) => {
                         </p>
                         <p>
                             <strong>Runtime:</strong> {movieDetail.runtime} minutes
+                        </p>
+                        <p>
+                            <Provider prop ={{Id: Id, Token: Token}}/>
                         </p>
                         {/* Add more details as needed */}
                     </div>
