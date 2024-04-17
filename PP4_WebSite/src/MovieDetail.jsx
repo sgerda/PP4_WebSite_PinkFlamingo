@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Provider from "./Provider";
+import "./style.css";
+
 
 
 const MovieDetail = ({ prop }) => {
@@ -40,7 +42,7 @@ const MovieDetail = ({ prop }) => {
 
     return (
         <>
-            <div>
+            <div className="movie-details"> {/* Apply class name for styling */}
                 {movieDetail && (
                     <div key={movieDetail.id}>
                         <h3>{movieDetail.original_title}</h3>
@@ -60,15 +62,12 @@ const MovieDetail = ({ prop }) => {
                             <strong>Tagline:</strong> {movieDetail.tagline} 
                         </p>
                         <p>
-                        <strong>Genres:</strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}  
+                            <strong>Genres:</strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}  
                         </p>
                         <p>
                             <strong>Runtime:</strong> {movieDetail.runtime} minutes
                         </p>
-                        <p>
-                            <Provider prop ={{Id: Id, Token: Token}}/>
-                        </p>
-                        {/* Add more details as needed */}
+                        <Provider prop={{ Id: Id, Token: Token }}/>
                     </div>
                 )}
             </div>

@@ -5,8 +5,8 @@
 }
 
 :root{
-    --primary-color:#0f0f18;
-    --secondary-color: #242323;
+    --primary-color:hsl(240, 8%, 50%);
+    --secondary-color: hsl(0, 1%, 14%);
 }
 
 body{
@@ -24,8 +24,8 @@ header{
 }
 
 .search{
-    background-color: transparent;
-    border: 2xp solid var(--primary-color);
+    background-color: hsla(0, 3%, 71%, 0.664);
+    border: 2xp solid var(--secondary-color);
     padding: 0.5rem 1rem;
     border-radius: 50px;
     font-size: 1rem;
@@ -39,7 +39,7 @@ header{
 }
 
 .search::placeholder{
-    color:gray;
+    color:hsl(0, 100%, 100%);
 }
 
 main{
@@ -54,9 +54,43 @@ main{
     border-radius: 3px;
     box-shadow: 0.2px 4px 5px rgba(0, 0, 0, 1);
     background-color: var(--secondary-color);
+    position:relative;
+    overflow: hidden;
     
 }
 
 .movie img{
     width: 100%;
+}
+
+.movie-info{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    letter-spacing: 0.5px;
+}
+
+.movie-info h3{
+    margin-top: 0;
+}
+
+.movie-info span{
+    background-color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3xp;
+    font-weight: bold;
+}
+
+.movie-info span.green{
+    color: lightgreen;
+}
+
+.movie-info span.orange{
+    color: orange;
+}
+
+.movie-info span.red{
+    color: red;
 }
