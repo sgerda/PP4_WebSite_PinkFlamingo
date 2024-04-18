@@ -19,6 +19,7 @@ const MovieFetch = () => {
                         params: {
                             language: "en",
                             sort_by: "Popularity.desc",
+                                                        
                         },
                         headers: {
                             Accept: "application/json",
@@ -94,11 +95,7 @@ const MovieFetch = () => {
             </header>
     
             <main id="main">
-                {selectedMovieId ? (
-                    <MovieDetailFunc/>
-                ) : (
-                    <HomePage/>
-                )}
+                {selectedMovieId ? (<MovieDetailFunc/>) : (<HomePage/>)}
             </main>
         </>
     );
