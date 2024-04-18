@@ -38,7 +38,7 @@ const MovieDetail = ({ prop }) => {
         fetchMovieDetail();
     }, [prop]);
 
-    console.log("Received Id for details:", Id);
+    
 
     return (
         <>

@@ -8,6 +8,7 @@ const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5Z
 const MovieFetch = () => {
     const [movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
+    const [searchQuery, setSearchQuery] = useState(" ");
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -41,12 +42,24 @@ const MovieFetch = () => {
         setSelectedMovieId(id === selectedMovieId ? null : id);
     }
 
+    const handleSearchInput = (event) => {
+        setSearchQuery(event.target.value);
+        console.log("this is what I enter when I write something on search:", searchQuery);
+    }
+
+    
+    
+
     return (
         <>
             <header>
-                <form id="form">
-                    <input type="text" placeholder="Search" id="search" className="search"/>
-                </form>
+                <input
+                    type="text"
+                    placeholder="Search"
+                    id="search"
+                    className="search"
+                    onChange={handleSearchInput}
+                />
             </header>
     
             <main id="main">
