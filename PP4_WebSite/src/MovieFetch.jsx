@@ -55,11 +55,11 @@ const MovieFetch = () => {
         }
     };
 
-    const MovieDetailFunc = () => {
+    function MovieDetailFunc(){
         return <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />;
     };
 
-    const HomePage = () => {
+    function HomePage (){
         return (
             <>
                 {movies.map((movie) => (
@@ -82,6 +82,20 @@ const MovieFetch = () => {
         );
     };
 
+    function RenderOptions(){
+        if(selectedMovieId){
+            return(<MovieDetailFunc/>);
+        }
+        else if(showSearchQuery){
+            return(<SearchQuery prop={{MovieName: query, Token: AuthToken}}/>);
+        }
+        else{
+            return(<HomePage/>);
+        }
+    }
+
+    
+
     return (
         <>
             <header>
@@ -99,6 +113,7 @@ const MovieFetch = () => {
             
     
             { <main id="main">
+                {<RenderOptions/>}
                 {/* {selectedMovieId ? (<MovieDetailFunc />) : (<HomePage/>)} */} 
             </main> }
         </>
