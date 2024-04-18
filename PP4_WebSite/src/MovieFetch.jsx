@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import axios from 'axios';
 import MovieDetail from "./MovieDetail";
 import "./style.css";
@@ -40,12 +40,43 @@ const MovieFetch = () => {
 
     const handleClick = (id) => {
         setSelectedMovieId(id === selectedMovieId ? null : id);
-    }
+    };
 
     const handleSearchInput = (event) => {
         setSearchQuery(event.target.value);
         console.log("this is what I enter when I write something on search:", searchQuery);
-    }
+    };
+
+    //this functino returns the movie details. when the user clicks the poster.
+    function MovieDetailFunc(){
+        
+        return(<MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }}/>);
+        
+    };
+
+    // func returns the popular list of movies. This is the home page.
+    function HomePage(){
+        return(
+            <>
+                {movies.map((movie) => (
+                <div className="movie" key={movie.id}>
+                    <img
+                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                        alt={movie.title} 
+                        onClick={() => handleClick(movie.id)}
+                    />
+                    <div className="movie-info">
+                        <h3>{movie.title}</h3>
+                        <span className="green">{movie.vote_average}</span>
+                    </div>
+                    <div className="overview">
+                        {movie.overview}
+                    </div>
+                </div>
+            ))}
+            </>
+        );
+    };
 
     
     
@@ -64,26 +95,9 @@ const MovieFetch = () => {
     
             <main id="main">
                 {selectedMovieId ? (
-                    <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />
+                    <MovieDetailFunc/>
                 ) : (
-                    <>
-                        {movies.map((movie) => (
-                            <div className="movie" key={movie.id}>
-                                <img
-                                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                                    alt={movie.title} 
-                                    onClick={() => handleClick(movie.id)}
-                                />
-                                <div className="movie-info">
-                                    <h3>{movie.title}</h3>
-                                    <span className="green">{movie.vote_average}</span>
-                                </div>
-                                <div className="overview">
-                                    {movie.overview}
-                                </div>
-                            </div>
-                        ))}
-                    </>
+                    <HomePage/>
                 )}
             </main>
         </>
