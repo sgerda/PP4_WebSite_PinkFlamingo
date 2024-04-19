@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import MovieDetail from "./MovieDetail";
 import SearchQuery from "./SearchQuery";
+import FetGenreList from "./FetGenreList";
 import "./style.css";
 
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
@@ -9,51 +10,48 @@ const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5Z
 const MovieFetch = () => {
     const [movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
-    const [query, setQuery] = useState(' ');
+    const [query, setQuery] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearchQuery, setShowSearchQuery] = useState(false);
+    
 
     useEffect(() => {
+        // Fetch movies
         const fetchMovies = async () => {
             try {
-                const movieResponse = await axios.get(
-                    'https://api.themoviedb.org/3/movie/popular',
-                    {
-                        params: {
-                            language: "en",
-                            sort_by: "popularity.desc"
-                        },
-                        headers: {
-                            Accept: "application/json",
-                            Authorization: AuthToken,
-                        },
+                const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
+                    params: {
+                        language: "en",
+                        sort_by: "popularity.desc"
+                    },
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: AuthToken,
                     }
-                );
-
-                setMovies(movieResponse.data.results);
+                });
+                setMovies(response.data.results);
             } catch (error) {
                 console.error(error);
             }
         };
-
         fetchMovies();
+
+        
     }, []);
 
-    const handleClick = (id) => {
-        setSelectedMovieId(id === selectedMovieId ? null : id);
-    };
-
     const handleSearchInput = (event) => {
-       const value = event.target.value;
-       setQuery(value);
+        setQuery(event.target.value);
     };
 
     const handleKeyUp = (event) => {
         if (event.key === "Enter") {
-            // Trigger the search and show the SearchQuery component
             setSearchQuery(query);
             setShowSearchQuery(true);
         }
+    };
+
+    const handleClick = (id) => {
+        setSelectedMovieId(id === selectedMovieId ? null : id);
     };
 
     function MovieDetailFunc() {
@@ -93,6 +91,8 @@ const MovieFetch = () => {
         }
     }
 
+    
+    //console.log("genre array:", selectedGenre);
     return (
         <>
             <header>
@@ -106,12 +106,14 @@ const MovieFetch = () => {
                     onKeyUp={handleKeyUp}
                 />
             </header>
+            { <FetGenreList/> }
             <main id="main">
-                {RenderOptions()}
+                <RenderOptions prop={{Token:AuthToken}}/>
             </main>
         </>
     );
 };
 
 export default MovieFetch;
+
 
