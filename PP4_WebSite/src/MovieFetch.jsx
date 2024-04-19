@@ -3,16 +3,19 @@ import axios from 'axios';
 import MovieDetail from "./MovieDetail";
 import SearchQuery from "./SearchQuery";
 import FetGenreList from "./FetGenreList";
+import SearchGenre from "./SearchGenre";
 import "./style.css";
 
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
 
-const MovieFetch = () => {
+const MovieFetch = ({prop}) => {
     const [movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearchQuery, setShowSearchQuery] = useState(false);
+    const [searchClick, setSearchClick] = useState(false);
+    //const { genreIds } = prop;
     
 
     useEffect(() => {
@@ -37,7 +40,7 @@ const MovieFetch = () => {
         fetchMovies();
 
         
-    }, []);
+    }, [prop]);
 
     const handleSearchInput = (event) => {
         setQuery(event.target.value);
@@ -53,6 +56,10 @@ const MovieFetch = () => {
     const handleClick = (id) => {
         setSelectedMovieId(id === selectedMovieId ? null : id);
     };
+
+    const handleSearchBnt = () =>{
+        setSearchClick(true);
+    }
 
     function MovieDetailFunc() {
         return <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />;
@@ -81,18 +88,26 @@ const MovieFetch = () => {
         );
     }
 
+    function GenreSearchComp(){}
+
     function RenderOptions() {
         if (selectedMovieId) {
             return <MovieDetailFunc />;
         } else if (showSearchQuery) {
             return <SearchQuery prop={{ MovieName: searchQuery, Token: AuthToken }} />;
         } else {
-            return <HomePage />;
+            return (
+            <>
+                <button onClick={handleSearchBnt}>search </button>
+                {searchClick ? <SearchGenre prop={{genre: genreIds, Token: AuthToken}}/> : <HomePage />}
+            </>
+            )
         }
     }
 
     
     //console.log("genre array:", selectedGenre);
+    
     return (
         <>
             <header>

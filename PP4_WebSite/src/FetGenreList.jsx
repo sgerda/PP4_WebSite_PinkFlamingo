@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-
+import ParentComponent from "./ParentComponent";
 const FetGenreList = ({prop}) =>{
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelected] = useState([]);
@@ -61,6 +61,8 @@ const FetGenreList = ({prop}) =>{
     return(
         <>
             <RenderGenreTags/>
+            <ParentComponent prop ={{genreIds: selectedGenre}}/>
+            
         </>
     )
 
