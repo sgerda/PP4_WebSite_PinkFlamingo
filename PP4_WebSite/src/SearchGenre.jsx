@@ -21,14 +21,14 @@ const SearchGenre =({prop})=>{
                     }
                 } );
 
-                setMovies(moviesResponse.data.results);
+                setMovies(response.data.results);
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchMovies();
-    }, [prop]);
+    }, [genre, Token]);
 
 
     return (

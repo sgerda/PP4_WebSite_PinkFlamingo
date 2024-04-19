@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import MovieDetail from "./MovieDetail";
 import SearchQuery from "./SearchQuery";
-import FetGenreList from "./FetGenreList";
 import SearchGenre from "./SearchGenre";
 import "./style.css";
 
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
 
-const MovieFetch = ({prop}) => {
+const MovieFetch = () => {
     const [movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearchQuery, setShowSearchQuery] = useState(false);
     const [searchClick, setSearchClick] = useState(false);
+    const [genres, setGenres] = useState([]);
+    const [selectedGenre, setSelected] = useState([]);
+    const genreString = selectedGenre.join(",");
     //const { genreIds } = prop;
     
 
@@ -39,8 +41,23 @@ const MovieFetch = ({prop}) => {
         };
         fetchMovies();
 
+        const fetchGenres = async () => {
+            try {
+                const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: AuthToken,
+                    }
+                });
+                setGenres(response.data.genres);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchGenres();
+
         
-    }, [prop]);
+    }, []);
 
     const handleSearchInput = (event) => {
         setQuery(event.target.value);
@@ -59,11 +76,24 @@ const MovieFetch = ({prop}) => {
 
     const handleSearchBnt = () =>{
         setSearchClick(true);
-    }
+    };
+
+    const handleGenres = (event) => {
+        const genreId = event.target.id; // Get the genre ID from the clicked element
+    
+        // Check if the clicked genre is already selected
+        if (selectedGenre.includes(genreId)) {
+            // If it is, remove it from the selectedGenre array
+            setSelected(selectedGenre.filter((id) => id !== genreId));
+        } else {
+            // Otherwise, add it to the selectedGenre array
+            setSelected([...selectedGenre, genreId]);
+        }
+    };
 
     function MovieDetailFunc() {
         return <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />;
-    }
+    };
 
     function HomePage() {
         return (
@@ -88,7 +118,30 @@ const MovieFetch = ({prop}) => {
         );
     }
 
-    function GenreSearchComp(){}
+    console.log("movie genre id", selectedGenre);
+
+    const resetSearchButton = () => {
+        setSearchClick(false);
+        setSelected([]);
+    };
+
+    const RenderGenreTags = () => {
+        return (
+            <div id="genre-tags">
+                {genres.map((genre) => (
+                    <div
+                        className="genres"
+                        key={genre.id}
+                        id={genre.id} // Set the genre ID as the element ID
+                        onClick={handleGenres} // Attach the handleGenres function to the onClick event
+                    >
+                        {genre.name}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
 
     function RenderOptions() {
         if (selectedMovieId) {
@@ -99,7 +152,7 @@ const MovieFetch = ({prop}) => {
             return (
             <>
                 <button onClick={handleSearchBnt}>search </button>
-                {searchClick ? <SearchGenre prop={{genre: genreIds, Token: AuthToken}}/> : <HomePage />}
+                {searchClick ? <SearchGenre prop={{genre: genreString, Token: AuthToken}}/> : <HomePage />}
             </>
             )
         }
@@ -107,6 +160,7 @@ const MovieFetch = ({prop}) => {
 
     
     //console.log("genre array:", selectedGenre);
+    console.log("flag:", searchClick);
     
     return (
         <>
@@ -121,9 +175,9 @@ const MovieFetch = ({prop}) => {
                     onKeyUp={handleKeyUp}
                 />
             </header>
-            { <FetGenreList/> }
+            { <RenderGenreTags/> }
             <main id="main">
-                <RenderOptions prop={{Token:AuthToken}}/>
+                <RenderOptions/>
             </main>
         </>
     );

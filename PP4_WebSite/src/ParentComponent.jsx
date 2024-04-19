@@ -7,7 +7,7 @@ const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5Z
 const ParentComponent = ({prop}) => {
     const {genreIds} = prop;
 
-    return(<MovieFetch prop={{genreIds: genreIds}}/>);
+    // return(<MovieFetch prop={{genreIds: genreIds}}/>);
 };
 
 export default ParentComponent;
