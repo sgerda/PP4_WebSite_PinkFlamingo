@@ -9,7 +9,8 @@ const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5Z
 const MovieFetch = () => {
     const [movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(' ');
+    const [searchQuery, setSearchQuery] = useState('');
     const [showSearchQuery, setShowSearchQuery] = useState(false);
 
     useEffect(() => {
@@ -36,7 +37,6 @@ const MovieFetch = () => {
         };
 
         fetchMovies();
-
     }, []);
 
     const handleClick = (id) => {
@@ -44,22 +44,23 @@ const MovieFetch = () => {
     };
 
     const handleSearchInput = (event) => {
-        setQuery(event.target.value);
+       const value = event.target.value;
+       setQuery(value);
     };
 
     const handleKeyUp = (event) => {
         if (event.key === "Enter") {
-
             // Trigger the search and show the SearchQuery component
+            setSearchQuery(query);
             setShowSearchQuery(true);
         }
     };
 
-    function MovieDetailFunc(){
+    function MovieDetailFunc() {
         return <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />;
-    };
+    }
 
-    function HomePage (){
+    function HomePage() {
         return (
             <>
                 {movies.map((movie) => (
@@ -80,21 +81,17 @@ const MovieFetch = () => {
                 ))}
             </>
         );
-    };
-
-    function RenderOptions(){
-        if(selectedMovieId){
-            return(<MovieDetailFunc/>);
-        }
-        else if(showSearchQuery){
-            return(<SearchQuery prop={{MovieName: query, Token: AuthToken}}/>);
-        }
-        else{
-            return(<HomePage/>);
-        }
     }
 
-    
+    function RenderOptions() {
+        if (selectedMovieId) {
+            return <MovieDetailFunc />;
+        } else if (showSearchQuery) {
+            return <SearchQuery prop={{ MovieName: searchQuery, Token: AuthToken }} />;
+        } else {
+            return <HomePage />;
+        }
+    }
 
     return (
         <>
@@ -109,15 +106,12 @@ const MovieFetch = () => {
                     onKeyUp={handleKeyUp}
                 />
             </header>
-
-            
-    
-            { <main id="main">
-                {<RenderOptions/>}
-                {/* {selectedMovieId ? (<MovieDetailFunc />) : (<HomePage/>)} */} 
-            </main> }
+            <main id="main">
+                {RenderOptions()}
+            </main>
         </>
     );
 };
 
 export default MovieFetch;
+
