@@ -12,29 +12,33 @@
 body{
     background-color: var(--primary-color);
     font-family: 'Poppins', sans-serif;
+    color: white;
     margin: 0;
 }
 
-header{
-    padding: 1rem;
+header {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: flex-start; 
+    padding: 1rem;
     background-color: var(--secondary-color);
-
+    
 }
 
 .search{
     background-color: hsla(0, 3%, 71%, 0.664);
-    border: 2xp solid var(--secondary-color);
+    border: 2px solid var(--secondary-color);
     padding: 0.5rem 1rem;
     border-radius: 50px;
     font-size: 1rem;
     color: white;
     font-family: inherit;
+    margin-left: auto;
+   
 }
 
 .search:focus{
-    outline: 0xp;
+    outline: 0px;
     background-color: var(--primary-color);
 }
 
@@ -94,21 +98,92 @@ main{
 .movie-info span.red{
     color: red;
 }
-#genre-tags{
-    width:80%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-}
-.genres{
+
+
+.Home-tag {
     color: white;
     padding: 10px 20px;
-    background-color: palevioletred;
+    background-color: hsl(340, 57%, 64%);
     border-radius: 50px;
     margin: 5px;
     display: inline-block;
     cursor: pointer;
+}
 
+/* Genre container to group the tag and dropdown */
+.genre-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown box styles */
+.genre-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: hsl(340, 57%, 64%);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1000; /* Ensure the dropdown appears on top */
+}
+
+/* Genre option styles */
+.genre-option {
+    padding: 5px;
+    cursor: pointer;
+}
+
+/* Hover effect for options */
+.genre-option:hover {
+    background-color: hsl(340, 32%, 45%);
+}
+
+/* Adjust genre tag styles as needed */
+.genre-tag {
+    color: white;
+    padding: 10px 20px;
+    background-color: hsl(340, 57%, 64%);
+    border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+    align-items: center;
+}
+
+.genre-option.selected {
+    background-color: hsl(340, 32%, 45%);
+    color: white;
+    font-weight: bold;
+}
+
+
+
+.Page-title{
+    color: hsl(340, 57%, 64%);
+    margin: 10px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    width: auto; /* Add this line */
+    font-size: 1.5rem;
+}
+
+.Search-btn{
+    color: white;
+    padding: 10px 20px;
+    background-color: hsl(340, 57%, 64%);
+    border-radius: 50px;
+    margin: 5px;
+    font-size: 1rem;
+    display: inline-block;
+    cursor: pointer;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.genre-option.highlight {
+    background-color: hsl(340, 32%, 45%);
+    color: white;
+    font-weight: bold;
 }

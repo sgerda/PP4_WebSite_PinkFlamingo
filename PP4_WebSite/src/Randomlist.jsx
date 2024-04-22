@@ -1,0 +1,73 @@
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+
+
+const Randomlist = () =>{
+
+    const randomNumber = Math.floor(Math.random() * (500 - 1 + 1)) + 1;
+
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        // Fetch movies
+        const fetchMovies = async () => {
+            try {
+                const response = await axios.get('https://api.themoviedb.org/3/movie/top_rated', {
+                    params: {
+                        language: "en",
+                        sort_by: "popularity.desc",
+                        page: randomNumber,
+                    },
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: AuthToken,
+                    }
+                });
+                setMovies(response.data.results);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchMovies();
+
+        const fetchGenres = async () => {
+            try {
+                const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: AuthToken,
+                    }
+                });
+                setGenres(response.data.genres);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchGenres();
+
+        
+    }, []);
+
+    return(
+        <>
+            {movies.map((movie) => (
+                    <div className="movie" key={movie.id}>
+                        <img
+                            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                            alt={movie.title}
+                            onClick={() => handleClick(movie.id)}
+                        />
+                        <div className="movie-info">
+                            <h3>{movie.title}</h3>
+                            <span className="green">{movie.vote_average}</span>
+                        </div>
+                        <div className="overview">
+                            {movie.overview}
+                        </div>
+                    </div>
+                ))}
+        </>
+    )
+};
+
+export default Randomlist;
