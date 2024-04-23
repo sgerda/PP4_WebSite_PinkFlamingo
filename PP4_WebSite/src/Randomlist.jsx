@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 
-const Randomlist = () =>{
+const Randomlist = ({prop}) =>{
 
     const randomNumber = Math.floor(Math.random() * (500 - 1 + 1)) + 1;
 
     const [movies, setMovies] = useState([]);
+    const [genres, setGenres] = useState([]);
+    const{Token}=prop;
 
     useEffect(() => {
         // Fetch movies
@@ -20,7 +22,7 @@ const Randomlist = () =>{
                     },
                     headers: {
                         Accept: "application/json",
-                        Authorization: AuthToken,
+                        Authorization: Token,
                     }
                 });
                 setMovies(response.data.results);
@@ -35,7 +37,7 @@ const Randomlist = () =>{
                 const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
                     headers: {
                         Accept: "application/json",
-                        Authorization: AuthToken,
+                        Authorization: Token,
                     }
                 });
                 setGenres(response.data.genres);
@@ -46,7 +48,7 @@ const Randomlist = () =>{
         fetchGenres();
 
         
-    }, []);
+    }, [prop]);
 
     return(
         <>

@@ -5,6 +5,7 @@ import SearchQuery from "./SearchQuery";
 import SearchGenre from "./SearchGenre";
 import "./style.css";
 import Header from "./Header";
+import Randomlist from "./Randomlist";
 
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
 
@@ -19,6 +20,7 @@ const MovieFetch = () => {
     const [selectedGenre, setSelected] = useState([]);
     const genreString = selectedGenre.join(",");
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [randomize, setRandomize] = useState(false);
     //const { genreIds } = prop;
     
 
@@ -81,6 +83,10 @@ const MovieFetch = () => {
         
     };
 
+    const handleRandomBtn =()=>{
+        setRandomize(true);
+    }
+
     const handleGenres = (event) => {
         const genreId = event.target.id; // Get the genre ID from the clicked element
     
@@ -139,18 +145,26 @@ const MovieFetch = () => {
         } else if (showSearchQuery) {
             return <SearchQuery prop={{ MovieName: searchQuery, Token: AuthToken }} />;
         } else {
-            return (
-            <>
-                
-                {searchClick ? <SearchGenre prop={{genre: genreString, Token: AuthToken}}/> : <HomePage />}
-            </>
-            )
+            if(randomize){
+                return(
+                    <Randomlist prop={{Token:AuthToken}}/>
+                )
+            }
+            else{
+                return (
+                    <>
+                        
+                        {searchClick ? <SearchGenre prop={{genre: genreString, Token: AuthToken}}/> : <HomePage />}
+                    </>
+                )
+            }
         }
     }
 
     
     //console.log("genre array:", selectedGenre);
     console.log("flag:", searchClick);
+    console.log("randomize btn: ", randomize);
     
     
     return (
@@ -164,8 +178,10 @@ const MovieFetch = () => {
                 handleGenreTagClick={handleGenreTagClick}
                 genres={genres}
                 handleGenres={handleGenres}
-                selectedGenres={selectedGenre} // Make sure to pass `selectedGenre` down as `selectedGenres`
+                selectedGenres={selectedGenre} 
+               // Make sure to pass `selectedGenre` down as `selectedGenres`
             />
+            <button className="random-btn" onClick={handleRandomBtn}>Randomize</button>
             
             
             <main id="main">

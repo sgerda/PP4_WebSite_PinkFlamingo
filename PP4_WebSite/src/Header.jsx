@@ -1,6 +1,7 @@
 import React from 'react';
 
-function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, dropdownVisible, handleGenreTagClick, genres, handleGenres, selectedGenres }) {
+function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, dropdownVisible, handleGenreTagClick, genres, handleGenres,
+     selectedGenres, handleRandonBtn }) {
     // Render the genre dropdown function
     
     const RenderGenreDropdown = () => {
@@ -43,6 +44,7 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, dropdo
                     {RenderGenreDropdown()}
                 </div>
                 <button className="Search-btn" onClick={handleSearchBnt}>Search</button>
+                
                 <input
                     type="text"
                     placeholder="Search"
@@ -52,6 +54,7 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, dropdo
                     onChange={handleSearchInput}
                     onKeyUp={handleKeyUp}
                 />
+                <h3 className="profile">User Profile</h3>
             </header>
         </>
     );
