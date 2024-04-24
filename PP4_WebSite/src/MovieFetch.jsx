@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import MovieDetail from "./MovieDetail";
 import SearchQuery from "./SearchQuery";
@@ -19,7 +19,8 @@ const MovieFetch = () => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelected] = useState([]);
     const genreString = selectedGenre.join(",");
-    const [dropdownVisible, setDropdownVisible] = useState(false);
+    
+    
     const [randomize, setRandomize] = useState(false);
     //const { genreIds } = prop;
     
@@ -100,12 +101,6 @@ const MovieFetch = () => {
         }
         
     };
-
-    const handleGenreTagClick = () => {
-        setDropdownVisible(!dropdownVisible);
-        
-    };
-
  
 
     function MovieDetailFunc() {
@@ -174,14 +169,15 @@ const MovieFetch = () => {
                 handleSearchInput={handleSearchInput}
                 handleKeyUp={handleKeyUp}
                 handleSearchBnt={handleSearchBnt}
-                dropdownVisible={dropdownVisible}
-                handleGenreTagClick={handleGenreTagClick}
+                //dropdownVisible={dropdownVisible}
+                //handleGenreTagClick={handleGenreTagClick}
                 genres={genres}
                 handleGenres={handleGenres}
-                selectedGenres={selectedGenre} 
+                selectedGenres={selectedGenre}
+                handleRandonBtn={handleRandomBtn}
                // Make sure to pass `selectedGenre` down as `selectedGenres`
             />
-            <button className="random-btn" onClick={handleRandomBtn}>Randomize</button>
+           
             
             
             <main id="main">

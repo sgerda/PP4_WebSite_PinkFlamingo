@@ -7,7 +7,7 @@ const Randomlist = ({prop}) =>{
     const randomNumber = Math.floor(Math.random() * (500 - 1 + 1)) + 1;
 
     const [movies, setMovies] = useState([]);
-    const [genres, setGenres] = useState([]);
+    const [genre, setGenres] = useState([]);
     const{Token}=prop;
 
     useEffect(() => {
