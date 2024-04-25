@@ -1,44 +1,38 @@
-import React,{ useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-
-function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handleGenreTagClick, genres, handleGenres,
-     selectedGenres, handleRandonBtn }) {
+function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handleGenreTagClick, handleRandonBtn, genres, handleGenres, selectedGenres }) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const closeMenu = useRef(null);
-    // Render the genre dropdown function
-        //need to fix the click anywhere in the screen to close genre 
+    const genreDropdownRef = useRef(null);
 
-    useEffect(()=>{
-        const handleGenreTagClick = (e) => {
-            if(!closeMenu.current.contains(e.target)){
-                setDropdownVisible(false);
-                console.log(closeMenu.current);
-            }
-                        
-        };
-
-        document.addEventListener("mousedown",handleGenreTagClick);
-
-        return()=>{
-            document.removeEventListener("mousedown", handleGenreTagClick);
+    // Event handler function for closing the dropdown
+    const handleOutsideClick = (e) => {
+        if (genreDropdownRef.current && !genreDropdownRef.current.contains(e.target)) {
+            setDropdownVisible(false);
         }
-    })
-    
+    };
+
+    useEffect(() => {
+        // Add mouseup event listener
+        document.addEventListener('mouseup', handleOutsideClick);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('mouseup', handleOutsideClick);
+        };
+    }, []);
+
     const RenderGenreDropdown = () => {
         if (dropdownVisible) {
             return (
-                <div className="genre-dropdown">
+                <div className="genre-dropdown" ref={genreDropdownRef}>
                     {genres.map((genre) => {
-                        // Determine if the genre is selected
                         const isSelected = selectedGenres.includes(genre.id);
-    
-                        // Apply the "highlight" class if the genre is selected
-                        const genreClass = isSelected ? "genre-option highlight" : "genre-option";
-    
+                        const genreClass = isSelected ? 'genre-option highlight' : 'genre-option';
+
                         return (
                             <div
                                 key={genre.id}
-                                id={genre.id} // Add the id attribute for identification
+                                id={genre.id}
                                 className={genreClass}
                                 onClick={() => handleGenres({ target: { id: genre.id } })}
                             >
@@ -53,31 +47,28 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handle
     };
 
     return (
-        <>
-            <header>
-                <h3 className="Page-title">Pink Flamingo Movies</h3>
-                <a href="/" className="Home-tag">Home</a>
-                <div className="genre-container" ref={closeMenu}>
-                    <div className="genre-tag" onClick={handleGenreTagClick}>
-                        Genres
-                    </div>
-                    {RenderGenreDropdown()}
+        <header>
+            <h3 className="Page-title">Pink Flamingo Movies</h3>
+            <a href="/" className="Home-tag">Home</a>
+            <div className="genre-container">
+                <div className="genre-tag" onClick={() => setDropdownVisible(!dropdownVisible)}>
+                    Genres
                 </div>
-                <button className="Search-btn" onClick={handleSearchBnt}>Search</button>
-                <button className="random-btn" onClick={handleRandonBtn}>Randomize</button>
-                
-                <input
-                    type="text"
-                    placeholder="Search"
-                    id="search"
-                    className="search"
-                    value={query}
-                    onChange={handleSearchInput}
-                    onKeyUp={handleKeyUp}
-                />
-                <h3 className="profile">User Profile</h3>
-            </header>
-        </>
+                {RenderGenreDropdown()}
+            </div>
+            <button className="Search-btn" onClick={handleSearchBnt}>Search</button>
+            <button className="random-btn" onClick={handleRandonBtn}>Randomize</button>
+            <input
+                type="text"
+                placeholder="Search"
+                id="search"
+                className="search"
+                value={query}
+                onChange={handleSearchInput}
+                onKeyUp={handleKeyUp}
+            />
+            <h3 className="profile">User Profile</h3>
+        </header>
     );
 }
 
