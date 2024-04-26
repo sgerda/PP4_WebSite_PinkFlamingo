@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MovieDetail from "./MovieDetail";
 
 const SearchGenre =({prop})=>{
 
     const [Movies, setMovies] = useState([]);
+    const [selectedMovieId, setSelectedMovieId] = useState(null);
     const { genre, Token } = prop;
 
     useEffect(() => {
@@ -30,25 +32,42 @@ const SearchGenre =({prop})=>{
         fetchMovies();
     }, [genre, Token]);
 
+    const handleClick = (id) => {
+        setSelectedMovieId(id === selectedMovieId ? null : id);
+    };
+
+
+    function RenderOptions() {
+        if (selectedMovieId) {
+            return <MovieDetail prop={{ Id: selectedMovieId, Token:Token }}/>;
+        } else {
+            return (
+                <>
+                    {Movies.map((movie) => (
+                        <div className="movie" key={movie.id}>
+                            <img
+                                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                alt={movie.title}
+                                onClick={() => handleClick(movie.id)}
+                            />
+                            <div className="movie-info">
+                                <h3>{movie.title}</h3>
+                                <span className="green">{movie.vote_average}</span>
+                            </div>
+                            <div className="overview">
+                                {movie.overview}
+                            </div>
+                        </div>
+                    ))}
+                </>
+            );
+        }
+    };
+
 
     return (
         <>
-            {Movies.map((movie) => (
-                <div className="movie" key={movie.id}>
-                    <img
-                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                        alt={movie.title}
-                        onClick={() => handleClick(movie.id)}
-                    />
-                    <div className="movie-info">
-                        <h3>{movie.title}</h3>
-                        <span className="green">{movie.vote_average}</span>
-                    </div>
-                    <div className="overview">
-                        {movie.overview}
-                    </div>
-                </div>
-            ))}
+            <RenderOptions/>
         </>
     );
    

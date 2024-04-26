@@ -18,6 +18,7 @@ const MovieFetch = () => {
     const [searchClick, setSearchClick] = useState(false);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelected] = useState([]);
+    
     const genreString = selectedGenre.join(",");
     
     
@@ -154,7 +155,7 @@ const MovieFetch = () => {
                 )
             }
         }
-    }
+    };
 
     
     //console.log("genre array:", selectedGenre);

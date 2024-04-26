@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import MovieDetail from "./MovieDetail";
 
 const SearchQuery = ({ prop }) => {
     const { Token, MovieName } = prop;
     const [query, setQuery] = useState([]);
+    const [selectedMovieId, setSelectedMovieId] = useState(null);
 
     useEffect(() => {
         const fetchQuery = async () => {
@@ -32,25 +34,41 @@ const SearchQuery = ({ prop }) => {
         fetchQuery();
     }, [prop]);
 
+    const handleClick = (id) => {
+        setSelectedMovieId(id === selectedMovieId ? null : id);
+    };
     console.log("this is the movie name:", MovieName);
+
+    function RenderOptions() {
+        if (selectedMovieId) {
+            return <MovieDetail prop={{ Id: selectedMovieId, Token:Token }}/>;
+        } else {
+            return (
+                <>
+                    {query.map((movie) => (
+                        <div className="movie" key={movie.id}>
+                            <img
+                                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                alt={movie.title}
+                                onClick={() => handleClick(movie.id)}
+                            />
+                            <div className="movie-info">
+                                <h3>{movie.title}</h3>
+                                <span className="green">{movie.vote_average}</span>
+                            </div>
+                            <div className="overview">
+                                {movie.overview}
+                            </div>
+                        </div>
+                    ))}
+                </>
+            );
+        }
+    };
 
     return (
         <>
-            {query.map((movie) => (
-                <div className="movie" key={movie.id}>
-                    <img
-                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                        alt={movie.title}
-                    />
-                    <div className="movie-info">
-                        <h3>{movie.title}</h3>
-                        <span className="green">{movie.vote_average}</span>
-                    </div>
-                    <div className="overview">
-                        {movie.overview}
-                    </div>
-                </div>
-            ))}
+            <RenderOptions/>
         </>
     );
 };

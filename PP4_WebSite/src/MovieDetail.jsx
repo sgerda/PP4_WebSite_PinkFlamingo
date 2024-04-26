@@ -9,6 +9,7 @@ const MovieDetail = ({ prop }) => {
     const Token = prop.Token;
     const Id = prop.Id;
    
+   
     const [movieDetail, setMovieDetail] = useState({}); // Initialize as empty object
 
     useEffect(() => {
@@ -38,6 +39,8 @@ const MovieDetail = ({ prop }) => {
         fetchMovieDetail();
     }, [prop]);
 
+
+
     
 
     return (
@@ -49,7 +52,8 @@ const MovieDetail = ({ prop }) => {
                         {movieDetail.poster_path && (
                             <img
                                 src={`https://image.tmdb.org/t/p/w200${movieDetail.poster_path}`}
-                                alt={movieDetail.title} 
+                                alt={movieDetail.title}
+                                
                             />
                         )}
                         <p>
