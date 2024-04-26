@@ -6,7 +6,7 @@ const SearchGenre =({prop})=>{
 
     const [Movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
-    const { genre, Token } = prop;
+    const { genre, Token, Rating } = prop;
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -35,34 +35,45 @@ const SearchGenre =({prop})=>{
     const handleClick = (id) => {
         setSelectedMovieId(id === selectedMovieId ? null : id);
     };
+    console.log("Rating", Rating);
 
 
     function RenderOptions() {
         if (selectedMovieId) {
-            return <MovieDetail prop={{ Id: selectedMovieId, Token:Token }}/>;
+            return <MovieDetail prop={{ Id: selectedMovieId, Token: Token }} />;
         } else {
             return (
                 <>
-                    {Movies.map((movie) => (
-                        <div className="movie" key={movie.id}>
-                            <img
-                                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                                alt={movie.title}
-                                onClick={() => handleClick(movie.id)}
-                            />
-                            <div className="movie-info">
-                                <h3>{movie.title}</h3>
-                                <span className="green">{movie.vote_average}</span>
-                            </div>
-                            <div className="overview">
-                                {movie.overview}
-                            </div>
-                        </div>
-                    ))}
+                    {Movies.map((movie) => {
+                        // Check if the movie's rating (vote average) is greater than or equal to the provided rating
+                        if (movie.vote_average >= Rating) {
+                            return (
+                                <div className="movie" key={movie.id}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                        alt={movie.title}
+                                        onClick={() => handleClick(movie.id)}
+                                    />
+                                    <div className="movie-info">
+                                        <h3>{movie.title}</h3>
+                                        {/* Display the movie rating rounded to 1 decimal place */}
+                                        <span className="green">{movie.vote_average.toFixed(1)}</span>
+                                    </div>
+                                    <div className="overview">
+                                        {movie.overview}
+                                    </div>
+                                </div>
+                            );
+                        } else {
+                            // Return null if the movie's rating is less than the provided rating
+                            return null;
+                        }
+                    })}
                 </>
             );
         }
     };
+    
 
 
     return (

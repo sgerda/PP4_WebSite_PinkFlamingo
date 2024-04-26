@@ -110,6 +110,38 @@ main{
     cursor: pointer;
 }
 
+/* Add styling for rating container */
+.rating-container {
+    position: relative;
+    display: inline-block;
+    display: inline-block;
+    align-items: center;
+    margin: 5px;
+}
+
+/* Add styling for rating tag similar to genre tag */
+.rating-tag {
+    color: white;
+    padding: 10px 20px;
+    background-color: hsl(340, 57%, 64%);
+    border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+    
+    
+}
+.rating-dropdown{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: hsl(340, 57%, 64%);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1000;
+}
+
 /* Genre container to group the tag and dropdown */
 .genre-container {
     position: relative;
@@ -210,3 +242,6 @@ main{
     align-items: center;
     font-family: 'Poppins', sans-serif;
 }
+
+
+

@@ -18,6 +18,7 @@ const MovieFetch = () => {
     const [searchClick, setSearchClick] = useState(false);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelected] = useState([]);
+    const [selectedRating, setSelectedRating] = useState(null);
     
     const genreString = selectedGenre.join(",");
     
@@ -102,6 +103,11 @@ const MovieFetch = () => {
         }
         
     };
+
+    const handleRating = (rating) => {
+        setSelectedRating(rating);
+    };
+    
  
 
     function MovieDetailFunc() {
@@ -120,7 +126,7 @@ const MovieFetch = () => {
                         />
                         <div className="movie-info">
                             <h3>{movie.title}</h3>
-                            <span className="green">{movie.vote_average}</span>
+                            <span className="green">{movie.vote_average.toFixed(1)}</span>
                         </div>
                         <div className="overview">
                             {movie.overview}
@@ -150,7 +156,7 @@ const MovieFetch = () => {
                 return (
                     <>
                         
-                        {searchClick ? <SearchGenre prop={{genre: genreString, Token: AuthToken}}/> : <HomePage />}
+                        {searchClick ? <SearchGenre prop={{ genre: genreString, Token: AuthToken, Rating: selectedRating }} /> : <HomePage />}
                     </>
                 )
             }
@@ -165,18 +171,17 @@ const MovieFetch = () => {
     
     return (
         <>
-                <Header
+            <Header
                 query={query}
                 handleSearchInput={handleSearchInput}
                 handleKeyUp={handleKeyUp}
                 handleSearchBnt={handleSearchBnt}
-                //dropdownVisible={dropdownVisible}
-                //handleGenreTagClick={handleGenreTagClick}
                 genres={genres}
                 handleGenres={handleGenres}
                 selectedGenres={selectedGenre}
                 handleRandonBtn={handleRandomBtn}
-               // Make sure to pass `selectedGenre` down as `selectedGenres`
+                handleRating={handleRating}
+                
             />
            
             

@@ -1,13 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handleGenreTagClick, handleRandonBtn, genres, handleGenres, selectedGenres }) {
+function Header({
+    query,
+    handleSearchInput,
+    handleKeyUp,
+    handleSearchBnt,
+    handleRandonBtn,
+    genres,
+    handleGenres,
+    selectedGenres,
+    handleRating,
+}) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [ratingVisible, setRatingVisible] = useState(false);
+    const [selectedRating, setSelectedRating] = useState(null);
+    
     const genreDropdownRef = useRef(null);
+    const ratingDropdownRef = useRef(null);
 
-    // Event handler function for closing the dropdown
+    // Event handler function for closing the dropdowns
     const handleOutsideClick = (e) => {
         if (genreDropdownRef.current && !genreDropdownRef.current.contains(e.target)) {
             setDropdownVisible(false);
+        }
+        if (ratingDropdownRef.current && !ratingDropdownRef.current.contains(e.target)) {
+            setRatingVisible(false);
         }
     };
 
@@ -21,7 +38,14 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handle
         };
     }, []);
 
-    const RenderGenreDropdown = () => {
+    // Event handler for handling rating change
+    const handleRatingChange = (e) => {
+        const ratingValue = parseInt(e.target.value);
+        setSelectedRating(ratingValue);
+        handleRating(ratingValue); // Pass the selected rating to the parent component
+    };
+
+    const renderGenreDropdown = () => {
         if (dropdownVisible) {
             return (
                 <div className="genre-dropdown" ref={genreDropdownRef}>
@@ -46,6 +70,42 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handle
         return null;
     };
 
+    const renderRatingDropdown = () => {
+        if (ratingVisible) {
+            return (
+                <div className="rating-dropdown" ref={ratingDropdownRef}>
+                    {Array.from({ length: 10 }, (_, index) => {
+                        const value = index + 1;
+                        return (
+                            <label key={value}>
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value={value}
+                                    checked={selectedRating === value}
+                                    onChange={handleRatingChange}
+                                />
+                                {value}
+                            </label>
+                        );
+                    })}
+                </div>
+            );
+        }
+        return null;
+    };
+
+    const renderRating = () => {
+        return (
+            <div className="rating-container">
+                <div className="rating-tag" onClick={() => setRatingVisible(!ratingVisible)}>
+                    Ratings
+                </div>
+                {renderRatingDropdown()}
+            </div>
+        );
+    };
+
     return (
         <header>
             <h3 className="Page-title">Pink Flamingo Movies</h3>
@@ -54,10 +114,11 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handle
                 <div className="genre-tag" onClick={() => setDropdownVisible(!dropdownVisible)}>
                     Genres
                 </div>
-                {RenderGenreDropdown()}
+                {renderGenreDropdown()}
             </div>
             <button className="Search-btn" onClick={handleSearchBnt}>Search</button>
             <button className="random-btn" onClick={handleRandonBtn}>Randomize</button>
+            {renderRating()}
             <input
                 type="text"
                 placeholder="Search"
@@ -73,3 +134,4 @@ function Header({ query, handleSearchInput, handleKeyUp, handleSearchBnt, handle
 }
 
 export default Header;
+
