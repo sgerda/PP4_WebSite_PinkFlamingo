@@ -30,7 +30,7 @@ const SearchGenre =({prop})=>{
         };
 
         fetchMovies();
-    }, [genre, Token]);
+    }, [genre, Token, Rating]);
 
     const handleClick = (id) => {
         setSelectedMovieId(id === selectedMovieId ? null : id);
@@ -38,7 +38,7 @@ const SearchGenre =({prop})=>{
     console.log("Rating", Rating);
 
     function getcolor(vote){
-        if(vote>8){
+        if(vote>=8){
             return 'green'
         }
         else if( vote >=5){
@@ -68,7 +68,7 @@ const SearchGenre =({prop})=>{
                                     />
                                     <div className="movie-info">
                                         <h3>{movie.title}</h3>
-                                        {/* Display the movie rating rounded to 1 decimal place */}
+                                       
                                         <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
                                     </div>
                                     <div className="overview">
@@ -77,7 +77,7 @@ const SearchGenre =({prop})=>{
                                 </div>
                             );
                         } else {
-                            // Return null if the movie's rating is less than the provided rating
+                            
                             return null;
                         }
                     })}

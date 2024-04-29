@@ -40,7 +40,7 @@ const SearchQuery = ({ prop }) => {
     console.log("this is the movie name:", MovieName);
 
     function getcolor(vote){
-        if(vote>8){
+        if(vote>=8){
             return 'green'
         }
         else if( vote >=5){

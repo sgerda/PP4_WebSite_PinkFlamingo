@@ -115,7 +115,7 @@ const MovieFetch = () => {
     };
 
     function getcolor(vote){
-        if(vote>8){
+        if(vote>=8){
             return 'green'
         }
         else if( vote >=5){
@@ -161,7 +161,7 @@ const MovieFetch = () => {
         } else {
             if(randomize){
                 return(
-                    <Randomlist prop={{Token:AuthToken}}/>
+                    <Randomlist prop={{Token:AuthToken, Rating: selectedRating}}/>
                 )
             }
             else{
