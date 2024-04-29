@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Provider from "./Provider";
 import "./style.css";
-
-
 
 const MovieDetail = ({ prop }) => {
     const Token = prop.Token;
     const Id = prop.Id;
-   
-   
-    const [movieDetail, setMovieDetail] = useState({}); // Initialize as empty object
+
+    const [movieDetail, setMovieDetail] = useState({});
 
     useEffect(() => {
         const fetchMovieDetail = async () => {
@@ -19,12 +16,12 @@ const MovieDetail = ({ prop }) => {
                     `https://api.themoviedb.org/3/movie/${Id}`,
                     {
                         params: {
-                            language: 'en-US',
+                            language: "en-US",
                         },
                         headers: {
                             Accept: "application/json",
                             Authorization: Token,
-                        }
+                        },
                     }
                 );
 
@@ -39,43 +36,27 @@ const MovieDetail = ({ prop }) => {
         fetchMovieDetail();
     }, [prop]);
 
-
-
-    
-
     return (
-        <>
-            <div className="movie-details"> {/* Apply class name for styling */}
-                {movieDetail && (
-                    <div key={movieDetail.id}>
-                        <h3>{movieDetail.original_title}</h3>
-                        {movieDetail.poster_path && (
-                            <img
-                                src={`https://image.tmdb.org/t/p/w200${movieDetail.poster_path}`}
-                                alt={movieDetail.title}
-                                
-                            />
-                        )}
-                        <p>
-                            <strong>Synopsis:</strong> {movieDetail.overview} 
-                        </p>
-                        <p>
-                            <strong>Release Date:</strong> {movieDetail.release_date} 
-                        </p>
-                        <p>
-                            <strong>Tagline:</strong> {movieDetail.tagline} 
-                        </p>
-                        <p>
-                            <strong>Genres:</strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}  
-                        </p>
-                        <p>
-                            <strong>Runtime:</strong> {movieDetail.runtime} minutes
-                        </p>
-                        <Provider prop={{ Id: Id, Token: Token }}/>
+        <main className="movie-detail-container">
+            {movieDetail && (
+                <div className="movie-detail">
+                    <div className="poster-wrapper">
+                        <img
+                            src={`https://image.tmdb.org/t/p/w300${movieDetail.poster_path}`}
+                            alt={movieDetail.title}
+                            className="movie-poster"
+                        />
                     </div>
-                )}
-            </div>
-        </>
+
+                    <div className="info-wrapper">
+                        <h3 className="movie-title">{movieDetail.original_title}</h3>
+                        <p className="synopsis"><strong>Synopsis:</strong> {movieDetail.overview}</p>
+                        <p className="genres"><strong>Genres:</strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}</p>
+                        <Provider prop={{ Id: Id, Token: Token }} />
+                    </div>
+                </div>
+            )}
+        </main>
     );
 };
 

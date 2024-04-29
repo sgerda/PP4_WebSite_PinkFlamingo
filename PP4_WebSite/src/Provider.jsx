@@ -44,28 +44,36 @@ const Provider =({prop}) => {
     console.log("Received Id for streaming:", id);
     const renderProviders = (providers, type) => {
         if (providers.length > 0) {
-            return providers.map((provider, index) => (
-                <div key={index}>
-                    <img
-                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                        alt={provider.provider_name}
-                    />
-                    <p>{`${type}: ${provider.provider_name}`}</p>
+            return (
+                <div className="provider-container">
+                    {providers.map((provider, index) => (
+                        <div key={index} className="provider-item">
+                            <img
+                                className="provider-image"
+                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                alt={provider.provider_name}
+                                title={provider.provider_name} // Add title attribute for tooltip
+                            />
+                        </div>
+                    ))}
                 </div>
-            ));
+            );
         } else {
-            return <p>{`Not available for ${type}`}</p>;
+            return <p className="notA">{`Not available for ${type}`}</p>;
         }
     };
+    
+    
+    
     
 
     return (
         <>
-            <h2>Streaming</h2>
+            <h2 className="streaming-title">Streaming</h2>
             {renderProviders(Streaming, "Streaming")}
-            <h2>Buy</h2>
+            <h2 className="buy-title">Buy</h2>
             {renderProviders(buyProviders, "Buying")}
-            <h2>Rent</h2>
+            <h2 className="rent-title">Rent</h2>
             {renderProviders(rentProviders, "Renting")}
         </>
     );

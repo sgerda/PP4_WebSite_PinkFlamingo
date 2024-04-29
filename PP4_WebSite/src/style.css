@@ -64,7 +64,9 @@ main{
 }
 
 .movie img{
-    width: 100%;
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
 }
 
 .movie-info{
@@ -242,6 +244,89 @@ main{
     align-items: center;
     font-family: 'Poppins', sans-serif;
 }
+
+.provider-container {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Wrap to the next line if needed */
+    justify-content: center; /* Center the images */
+    gap: 20px; /* Space between items */
+    padding: 0px; /* Padding inside the container */
+    height: 50px;
+}
+
+.provider-item {
+    text-align: center; /* Center the text within each provider item */
+}
+
+
+/* Style for provider images */
+.provider-image {
+    width: 60px; /* Adjust the width as needed */
+    height: auto; 
+    border-radius: 20px; 
+    margin: 0px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.streaming-title{
+    text-align: center;
+}
+
+.buy-title{
+    text-align: center;
+}
+
+.rent-title{
+    text-align: center;
+}
+.notA{
+    text-align: center;
+}
+.movie-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    background-color: hsla(0, 0%, 31%, 0.445);
+    height: 700px;
+}
+
+.movie-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem; /* Adjust gap as needed */
+}
+
+.poster-wrapper {
+    flex: 0 0 auto;
+}
+
+.movie-poster {
+    width: 300px; /* Adjust width as needed */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0.2px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+.info-wrapper {
+    flex: 1; /* Takes up remaining space */
+}
+
+.movie-title {
+    margin-bottom: 0.5rem;
+}
+
+.synopsis {
+    margin-bottom: 1rem;
+}
+
+.genres {
+    margin-bottom: 0.5rem;
+}
+
+
+
+
 
 
 
