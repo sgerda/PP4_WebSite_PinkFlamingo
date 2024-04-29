@@ -37,6 +37,18 @@ const SearchGenre =({prop})=>{
     };
     console.log("Rating", Rating);
 
+    function getcolor(vote){
+        if(vote>8){
+            return 'green'
+        }
+        else if( vote >=5){
+            return 'orange'
+        }
+        else{
+            return 'red'
+        }
+    };
+
 
     function RenderOptions() {
         if (selectedMovieId) {
@@ -57,7 +69,7 @@ const SearchGenre =({prop})=>{
                                     <div className="movie-info">
                                         <h3>{movie.title}</h3>
                                         {/* Display the movie rating rounded to 1 decimal place */}
-                                        <span className="green">{movie.vote_average.toFixed(1)}</span>
+                                        <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
                                     </div>
                                     <div className="overview">
                                         {movie.overview}

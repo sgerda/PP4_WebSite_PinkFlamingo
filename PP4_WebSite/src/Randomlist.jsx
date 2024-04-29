@@ -56,6 +56,18 @@ const Randomlist = ({prop}) =>{
         setSelectedMovieId(id === selectedMovieId ? null : id);
     };
 
+    function getcolor(vote){
+        if(vote>8){
+            return 'green'
+        }
+        else if( vote >=5){
+            return 'orange'
+        }
+        else{
+            return 'red'
+        }
+    };
+    
     function RenderOptions() {
         if (selectedMovieId) {
             return <MovieDetail prop={{ Id: selectedMovieId, Token:Token }}/>;
@@ -71,7 +83,7 @@ const Randomlist = ({prop}) =>{
                                 />
                                 <div className="movie-info">
                                     <h3>{movie.title}</h3>
-                                    <span className="green">{movie.vote_average}</span>
+                                    <span className={getcolor(movie.vote_average)}>{movie.vote_average}</span>
                                 </div>
                                 <div className="overview">
                                     {movie.overview}

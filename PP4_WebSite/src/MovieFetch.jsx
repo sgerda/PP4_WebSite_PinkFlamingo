@@ -114,6 +114,18 @@ const MovieFetch = () => {
         return <MovieDetail prop={{ Id: selectedMovieId, Token: AuthToken }} />;
     };
 
+    function getcolor(vote){
+        if(vote>8){
+            return 'green'
+        }
+        else if( vote >=5){
+            return 'orange'
+        }
+        else{
+            return 'red'
+        }
+    };
+
     function HomePage() {
         return (
             <>
@@ -126,7 +138,7 @@ const MovieFetch = () => {
                         />
                         <div className="movie-info">
                             <h3>{movie.title}</h3>
-                            <span className="green">{movie.vote_average.toFixed(1)}</span>
+                            <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
                         </div>
                         <div className="overview">
                             {movie.overview}
