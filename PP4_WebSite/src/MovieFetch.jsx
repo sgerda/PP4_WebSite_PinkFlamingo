@@ -142,6 +142,7 @@ const MovieFetch = () => {
                             alt={movie.title}
                             onClick={() => handleClick(movie.id)}
                         />
+                        {/* Keep movie-info outside the overview to always display the title and rating */}
                         <div className="movie-info">
                             <h3>{movie.title}</h3>
                             <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
@@ -153,7 +154,9 @@ const MovieFetch = () => {
                 ))}
             </>
         );
-    }
+    };
+    
+    
 
     console.log("movie genre id", selectedGenre);   
 

@@ -69,24 +69,10 @@ main{
     border-radius: 8px;
 }
 
-.movie-info{
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    top:auto;
-    padding: 0.5rem 1rem 1rem;
-    letter-spacing: 0.5px;
-    
-}
-
-.movie:hover .movie-info {
-    transform: translateY(-300%);
-    transition: transform 0.3s ease-in;
-}
 
 .movie-info h3{
     margin-top: 0;
+    
 }
 
 .movie-info span{
@@ -108,26 +94,48 @@ main{
     color: red;
 }
 
-.overview{
+.movie-info {
     position: absolute;
+    top: 0; /* Position it at the top of the .movie element */
     left: 0;
     right: 0;
-    bottom: 0;
-    background-color: hsla(0, 0%, 0%, 0.788);
-    padding: 1rem;
-    max-height: 100%;
-    transform: translatey(101%);
-    transition: transform 0.3s ease-in;
+    padding: 0.5rem 1rem;
+    background-color: hsla(0, 0%, 0%, 0.7); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2; /* Ensure it appears above other content */
+    color: white;
 }
+
+.overview {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background-color: hsla(0, 0%, 0%, 0.7); /* Dark background */
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    color: white;
+    z-index: 1; /* Ensure it appears below movie-info */
+    display: flex;
+    flex-direction: column;
+}
+
 
 .movie:hover .overview{
     transform: translateY(0);
 }
 .movie:hover .movie-info{
-    transform: translateY(-10);
-    transition: transform 0.3s ease-in
+   top: 0;
 }
-
+.overview .movie-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* Space below title and rating */
+}
 .Home-tag {
     color: white;
     padding: 10px 20px;
