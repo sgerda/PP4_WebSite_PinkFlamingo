@@ -52,6 +52,7 @@ function Header({
                     {genres.map((genre) => {
                         const isSelected = selectedGenres.includes(genre.id);
                         const genreClass = isSelected ? 'genre-option highlight' : 'genre-option';
+                        
 
                         return (
                             <div
@@ -116,7 +117,6 @@ function Header({
                 </div>
                 {renderGenreDropdown()}
             </div>
-            <button className="Search-btn" onClick={handleSearchBnt}>Search</button>
             <button className="random-btn" onClick={handleRandonBtn}>Randomize</button>
             {renderRating()}
             <input

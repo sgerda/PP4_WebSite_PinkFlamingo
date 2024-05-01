@@ -6,6 +6,7 @@ import SearchGenre from "./SearchGenre";
 import "./style.css";
 import Header from "./Header";
 import Randomlist from "./Randomlist";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const AuthToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjA2MDkwNDk1M2M5ODE5ZDViYmJjOTAyODVkYjkwZCIsInN1YiI6IjY1ZmRkMjk1N2Y2YzhkMDE2MzZkY2I5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jr9alQFOXm7mSGJwMRoAu2bgjOYRO1pmpugB2xK96X8';
 
@@ -29,6 +30,7 @@ const MovieFetch = () => {
 
     useEffect(() => {
         // Fetch movies
+        console.log(`Current URL: ${location.pathname}`);
         const fetchMovies = async () => {
             try {
                 const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
@@ -101,6 +103,10 @@ const MovieFetch = () => {
             // Otherwise, add it to the selectedGenre array to select it
             setSelected([...selectedGenre, genreId]);
         }
+
+        setSearchClick(true);
+        setShowSearchQuery(false); // Reset the search query state
+        setSelectedMovieId(null); // Deselect any selected movie
         
     };
 
