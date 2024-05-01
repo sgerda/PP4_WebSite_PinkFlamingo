@@ -55,8 +55,8 @@ main{
 .movie{
     width: 300px;
     margin: 1rem;
-    border-radius: 3px;
-    box-shadow: 0.2px 4px 5px rgba(0, 0, 0, 1);
+    border-radius: 20px;
+    box-shadow: 0.2px 4px 20px hsla(0, 0%, 0%, 0.541);
     background-color: var(--secondary-color);
     position:relative;
     overflow: hidden;
@@ -74,8 +74,15 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    top:auto;
     padding: 0.5rem 1rem 1rem;
     letter-spacing: 0.5px;
+    
+}
+
+.movie:hover .movie-info {
+    transform: translateY(-300%);
+    transition: transform 0.3s ease-in;
 }
 
 .movie-info h3{
@@ -85,7 +92,7 @@ main{
 .movie-info span{
     background-color: var(--primary-color);
     padding: 0.25rem 0.5rem;
-    border-radius: 3px;
+    border-radius: 50px;
     font-weight: bold;
 }
 
@@ -115,6 +122,10 @@ main{
 
 .movie:hover .overview{
     transform: translateY(0);
+}
+.movie:hover .movie-info{
+    transform: translateY(-10);
+    transition: transform 0.3s ease-in
 }
 
 .Home-tag {
