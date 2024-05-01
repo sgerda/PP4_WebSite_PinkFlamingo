@@ -323,6 +323,7 @@ main{
     margin: 1rem;
     background-color: hsla(0, 0%, 31%, 0.445);
     height: 700px;
+    border-radius: 70px;
 }
 
 .movie-detail {
