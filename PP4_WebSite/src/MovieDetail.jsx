@@ -36,6 +36,7 @@ const MovieDetail = ({ prop }) => {
         fetchMovieDetail();
     }, [prop]);
 
+    let shortOverview;
     return (
         <main className="movie-detail-container">
             {movieDetail && (
@@ -47,6 +48,7 @@ const MovieDetail = ({ prop }) => {
                             className="movie-poster"
                         />
                     </div>
+                    
 
                     <div className="info-wrapper">
                         <h3 className="movie-title">{movieDetail.original_title}</h3>

@@ -66,10 +66,10 @@ const SearchQuery = ({ prop }) => {
                             />
                             <div className="movie-info">
                                 <h3>{movie.title}</h3>
-                                <span className={getcolor(movie.vote_average)}>{movie.vote_average}</span>
+                                <span className={getcolor(movie.vote_average)}>{Math.ceil(movie.vote_average)}</span>
                             </div>
                             <div className="overview">
-                                {movie.overview}
+                                {movie.overview.slice(1,100) + "...."}
                             </div>
                         </div>
                     ))}

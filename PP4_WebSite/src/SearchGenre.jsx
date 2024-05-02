@@ -72,7 +72,7 @@ const SearchGenre =({prop})=>{
                                         <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
                                     </div>
                                     <div className="overview">
-                                        {movie.overview}
+                                        {movie.overview.slice(1,100) + "...."}
                                     </div>
                                 </div>
                             );
