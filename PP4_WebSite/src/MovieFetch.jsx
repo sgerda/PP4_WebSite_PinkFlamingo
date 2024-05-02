@@ -145,10 +145,10 @@ const MovieFetch = () => {
                         {/* Keep movie-info outside the overview to always display the title and rating */}
                         <div className="movie-info">
                             <h3>{movie.title}</h3>
-                            <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
+                            <span className={getcolor(movie.vote_average)}>{Math.ceil(movie.vote_average)}</span>
                         </div>
                         <div className="overview">
-                            {movie.overview.slice(1,100) + "...."}
+                            {movie.overview.slice(1,100) + " ...."}
                         </div>
                     </div>
                 ))}

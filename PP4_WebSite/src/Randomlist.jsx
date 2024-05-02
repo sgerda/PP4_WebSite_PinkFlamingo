@@ -60,7 +60,7 @@ const Randomlist = ({prop}) =>{
         if(vote>=8){
             return 'green'
         }
-        else if( vote >=5){
+        else if( vote >=5 && vote < 8){
             return 'orange'
         }
         else{
@@ -76,7 +76,7 @@ const Randomlist = ({prop}) =>{
                 <>
                     {Movies.map((movie) => {
                         // Check if the movie's rating (vote average) is greater than or equal to the provided rating
-                        if (movie.vote_average >= Rating) {
+                        if (Math.ceil(movie.vote_average) >= Rating) {
                             return (
                                 <div className="movie" key={movie.id}>
                                     <img
@@ -87,10 +87,10 @@ const Randomlist = ({prop}) =>{
                                     <div className="movie-info">
                                         <h3>{movie.title}</h3>
                                        
-                                        <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
+                                        <span className={getcolor(movie.vote_average)}>{Math.ceil(movie.vote_average)}</span>
                                     </div>
                                     <div className="overview">
-                                        {movie.overview.slice(1,100) + "...."}
+                                        {movie.overview.slice(1,100) + " ...."}
                                     </div>
                                 </div>
                             );

@@ -7,6 +7,7 @@ const SearchGenre =({prop})=>{
     const [Movies, setMovies] = useState([]);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const { genre, Token, Rating } = prop;
+    const [RoundedRating, setRounded] = useState([]);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -41,7 +42,7 @@ const SearchGenre =({prop})=>{
         if(vote>=8){
             return 'green'
         }
-        else if( vote >=5){
+        else if( vote >=5 && vote < 8){
             return 'orange'
         }
         else{
@@ -57,8 +58,9 @@ const SearchGenre =({prop})=>{
             return (
                 <>
                     {Movies.map((movie) => {
+                        {setRounded(Math.ceil(movie.vote_average))}
                         // Check if the movie's rating (vote average) is greater than or equal to the provided rating
-                        if (movie.vote_average >= Rating) {
+                        if (Math.ceil(movie.vote_average) >= Rating) {
                             return (
                                 <div className="movie" key={movie.id}>
                                     <img
@@ -69,10 +71,10 @@ const SearchGenre =({prop})=>{
                                     <div className="movie-info">
                                         <h3>{movie.title}</h3>
                                        
-                                        <span className={getcolor(movie.vote_average)}>{movie.vote_average.toFixed(1)}</span>
+                                        <span className={getcolor(movie.vote_average)}>{Math.ceil(movie.vote_average)}</span>
                                     </div>
                                     <div className="overview">
-                                        {movie.overview.slice(1,100) + "...."}
+                                        {movie.overview.slice(1,100) + " ...."}
                                     </div>
                                 </div>
                             );

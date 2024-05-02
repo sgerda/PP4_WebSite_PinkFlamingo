@@ -36,7 +36,7 @@ const MovieDetail = ({ prop }) => {
         fetchMovieDetail();
     }, [prop]);
 
-    let shortOverview;
+    
     return (
         <main className="movie-detail-container">
             {movieDetail && (
@@ -52,8 +52,8 @@ const MovieDetail = ({ prop }) => {
 
                     <div className="info-wrapper">
                         <h3 className="movie-title">{movieDetail.original_title}</h3>
-                        <p className="synopsis"><strong>Synopsis:</strong> {movieDetail.overview}</p>
-                        <p className="genres"><strong>Genres:</strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}</p>
+                        <p className="synopsis"><strong>Synopsis:  </strong> {movieDetail.overview}</p>
+                        <p className="genres"><strong>Genres:  </strong> {movieDetail.genres && movieDetail.genres.map(genre => genre.name).join(', ')}</p>
                         <Provider prop={{ Id: Id, Token: Token }} />
                     </div>
                 </div>
